@@ -5,77 +5,229 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Personal Portfolio</title>
-    <link rel="website icon" type="jpg" href="logo1.jpg">
+     <link rel="website icon" type="jpg" href="logo1.jpg">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --text: #1f2937;
-            --text-light: #6b7280;
-            --background: #f9fafb;
-            --card: #ffffff;
-        }
+        
+    :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --text: #1f2937;
+        --text-light: #6b7280;
+        --background: #f9fafb;
+        --card: #ffffff;
+        --badge-active-bg: #22c55e;
+        --badge-active-text: #ffffff;
+    }
 
-        .dark {
-            --primary: #60a5fa;
-            --primary-dark: #3b82f6;
-            --text: #f3f4f6;
-            --text-light: #d1d5db;
-            --background: #111827;
-            --card: #1f2937;
-        }
+    .dark {
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --text: #f3f4f6;
+        --text-light: #d1d5db;
+        --background: #111827;
+        --card: #1f2937;
+        --badge-active-bg: #16a34a;
+        --badge-active-text: #ffffff;
+    }
 
-        body {
-            background-color: var(--background);
-            color: var(--text);
-            transition: all 0.3s ease;
-        }
+    /* Base body & section styles */
+    body {
+        background-color: var(--background);
+        color: var(--text);
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-        .card {
-            background-color: var(--card);
-            transition: all 0.3s ease;
-        }
+    .section {
+        padding: 4rem 1rem; /* Kept as-is for consistency */
+    }
 
+    /* NEW: Container for centering content */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: var(--primary-dark);
+        margin-bottom: 1rem;
+    }
+
+    .section-description {
+        max-width: 600px;
+        margin: 0 auto 3rem auto;
+        text-align: center;
+        color: var(--text-light);
+        font-size: 1.1rem;
+    }
+
+    /* UPDATED: Certificates grid - Reduced min-width from 280px to 250px for smaller boxes */
+    .certificates-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Smaller cards */
+        gap: 1.5rem; /* Reduced gap from 2rem for tighter layout */
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* UPDATED: Individual certificate card - Added border and reduced shadow for compact feel */
+    .certificate-card {
+        background-color: var(--card);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08); /* Lighter shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(0,0,0,0.05); /* Subtle border for definition */
+    }
+
+    .certificate-card:hover {
+        transform: translateY(-3px); /* Reduced hover lift from -5px */
+        box-shadow: 0 6px 12px rgba(0,0,0,0.12); /* Softer hover shadow */
+    }
+
+    /* UPDATED: Certificate image - Fixed height for consistent sizing */
+    .certificate-image {
+        height: 150px; /* Fixed height to control box size */
+        overflow: hidden;
+    }
+
+    .certificate-image img {
+        width: 100%;
+        height: 100%; /* Fill the container */
+        object-fit: cover; /* Maintain aspect ratio without distortion */
+        display: block;
+    }
+
+    /* UPDATED: Content padding - Reduced from 1.5rem to 1rem for compactness */
+    .certificate-content {
+        padding: 1rem; /* Smaller padding */
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* UPDATED: Title - Slightly smaller font */
+    .certificate-content h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.25rem; /* Reduced from 1.5rem */
+        color: var(--primary);
+    }
+
+    .certificate-content p {
+        margin: 0 0 1rem 0;
+        color: var(--text-light);
+        flex-grow: 1;
+        font-size: 0.95rem; /* Slightly smaller text */
+    }
+
+    .certificate-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+    }
+
+    .issue-date {
+        font-size: 0.85rem; /* Slightly smaller */
+        color: var(--text-light);
+    }
+
+    .status-badge {
+        padding: 0.25rem 0.75rem;
+        background-color: var(--badge-active-bg);
+        color: var(--badge-active-text);
+        font-size: 0.8rem;
+        font-weight: bold;
+        border-radius: 999px;
+        white-space: nowrap;
+    }
+
+    /* Responsive tweaks - Enhanced for smaller screens */
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 2rem;
+        }
+        .certificates-grid {
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 1rem; /* Even smaller gap */
+            max-width: 100%;
+        }
+        .certificate-content {
+            padding: 0.75rem; /* Extra small padding on mobile */
+        }
+        .certificate-content h3 {
+            font-size: 1.1rem;
+        }
+        .certificate-image {
+            height: 120px; /* Smaller image on mobile */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .certificates-grid {
+            gap: 1rem;
+        }
+        .certificate-card {
+            border-radius: 0.5rem;
+        }
         .section {
-            min-height: 100vh;
-            padding: 4rem 1rem;
+            padding: 2rem 1rem; /* Reduce section padding on very small screens */
         }
+    }
 
-        .nav-link {
-            position: relative;
-        }
+    /* Existing styles for other sections (nav, hero, etc.) - Kept unchanged */
+    .nav-link {
+        position: relative;
+    }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
-        }
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: var(--primary);
+        transition: width 0.3s ease;
+    }
 
-        .nav-link:hover::after {
-            width: 100%;
-        }
+    .nav-link:hover::after {
+        width: 100%;
+    }
 
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
+    .project-card:hover {
+        transform: translateY(-5px);
+    }
 
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    .card {
+        background-color: var(--card);
+        transition: all 0.3s ease;
+    }
+</style>
+
+        
     </style>
 </head>
 
@@ -89,40 +241,44 @@
                             class="text-blue-500">PORTFOLIO</span></span>
                 </a>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#home"
-                        class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 px-3 py-2">Home</a>
-                    <a href="#about"
-                        class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 px-3 py-2">About</a>
-                    <a href="#projects"
-                        class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 px-3 py-2">Projects</a>
-                    <a href="#contact"
-                        class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 px-3 py-2">Contact</a>
-                </div>
-                <button id="theme-toggle"
-                    class="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i id="theme-icon" class="fas fa-moon"></i>
-                </button>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button"
+                    <div class="hidden md:flex space-x-8">
+                        <a href="#home"
+                            class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 px-3 py-2">Home</a>
+                        <a href="#about"
+                            class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 px-3 py-2">About</a>
+                        <a href="#projects"
+                            class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 px-3 py-2">Projects</a>
+                        <a href="#certificates"
+                            class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 px-3 py-2">Certificates</a>
+                        <a href="#contact"
+                            class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 px-3 py-2">Contact</a>
+                    </div>
+
+                    <button id="theme-toggle"
                         class="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <i class="fas fa-bars"></i>
+                        <i id="theme-icon" class="fas fa-moon"></i>
                     </button>
+                    <div class="md:hidden">
+                        <button id="mobile-menu-button"
+                            class="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700">Home</a>
-                <a href="#about"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700">About</a>
-                <a href="#projects"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700">Projects</a>
-                <a href="#contact"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700">Contact</a>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="#home"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700">Home</a>
+                    <a href="#about"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700">About</a>
+                    <a href="#projects"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700">Projects</a>
+                    <a href="#contact"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700">Contact</a>
+                </div>
             </div>
-        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -171,13 +327,13 @@
                                 alt="Casual portrait of professional sitting at workspace with laptop and coffee"
                                 class="rounded-lg w-full h-auto mb-4">
                             <div class="flex justify-center space-x-4 mt-4">
-                                <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-500 text-xl">
+                                <a href="https://github.com/tejaskhanavte" class="text-gray-700 dark:text-gray-300 hover:text-blue-500 text-xl">
                                     <i class="fab fa-github"></i>
                                 </a>
-                                <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-500 text-xl">
+                                <a href="https://www.linkedin.com/in/tejas-khanavate-39907a342" class="text-gray-700 dark:text-gray-300 hover:text-blue-500 text-xl">
                                     <i class="fab fa-linkedin"></i>
                                 </a>
-                                <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-500 text-xl">
+                                <a href="https://x.com/TejasKhanavate" class="text-gray-700 dark:text-gray-300 hover:text-blue-500 text-xl">
                                     <i class="fab fa-twitter"></i>
                                 </a>
                             </div>
@@ -308,7 +464,7 @@
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2">Bisuness Of GDG Group</h3>
                         <p class="text-gray-700 dark:text-gray-300 mb-4">
-                           Electrical releted services provided by GDG Group
+                            Electrical releted services provided by GDG Group
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span
@@ -323,7 +479,7 @@
                                 class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400">
                                 <i class="fas fa-external-link-alt"></i> Live
                             </a>
-                            <a href="https://github.com/TejasKhanavte/my-projects.git" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                            <a href="#" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
                                 <i class="fab fa-github"></i> Code
                             </a>
                         </div>
@@ -338,7 +494,7 @@
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2">Online Examination & certificate Systam</h3>
                         <p class="text-gray-700 dark:text-gray-300 mb-4">
-                           a online examination systam that generate certificate after Completion of exam
+                            a online examination systam that generate certificate after Completion of exam
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span
@@ -349,10 +505,11 @@
                                 class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">Stripe</span>
                         </div>
                         <div class="flex space-x-3">
-                            <a href="https://tejaskhanavte.github.io/hackathon/" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400">
+                            <a href="https://tejaskhanavte.github.io/hackathon/"
+                                class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400">
                                 <i class="fas fa-external-link-alt"></i> Live
                             </a>
-                            <a href="https://github.com/TejasKhanavte/hackathon.git" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                            <a href="#" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
                                 <i class="fab fa-github"></i> Code
                             </a>
                         </div>
@@ -360,240 +517,299 @@
                 </div>
             </div>
         </div>
-    </section>
+<!--certificates-->
 
-    <!-- Contact Section -->
-    <section id="contact" class="section bg-gray-100 dark:bg-gray-800">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-4">Get In <span class="text-blue-500">Touch</span></h2>
-            <p class="text-xl text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
-                Have a project in mind or want to discuss potential opportunities? Feel free to reach out!
-            </p>
-            <div class="flex flex-col md:flex-row gap-12">
-                <div class="md:w-1/2">
-                    <div class="card p-8 rounded-xl shadow-lg h-full">
-                        <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start space-x-4">
-                                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
-                                    <i class="fas fa-envelope text-blue-500 dark:text-blue-400"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium">Email</h4>
-                                    <p class="text-gray-600 dark:text-gray-400">tejaskhanavate1@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start space-x-4">
-                                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
-                                    <i class="fas fa-phone-alt text-blue-500 dark:text-blue-400"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium">Phone</h4>
-                                    <p class="text-gray-600 dark:text-gray-400">+91 7620657696</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start space-x-4">
-                                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
-                                    <i class="fas fa-map-marker-alt text-blue-500 dark:text-blue-400"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium">Location</h4>
-                                    <p class="text-gray-600 dark:text-gray-400">pune</p>
-                                </div>
+       <section id="certificates" class="section">
+            <div class="container">
+                <h2 class="section-title">Certificates & Achievements</h2>
+                <p class="section-description">
+                    Professional certifications and achievements that demonstrate my expertise and commitment to
+                    continuous learning.
+                </p>
+
+                <div class="certificates-grid">
+                    <!-- Certificate 1 -->
+                    <div class="certificate-card">
+                        <div class="certificate-image">
+                            <img src="data.png"
+                                alt="Web Development Professional Certificate with gold seal and elegant blue background design" />
+                        </div>
+                        <div class="certificate-content">
+                            <h3>Data Thon Certificate</h3>
+                            <p>participate data structure and algorithm compitation</p>
+                            <div class="certificate-meta">
+                                <span class="issue-date">Issued: June 2025</span>
+                                <span class="status-badge">Active</span>
                             </div>
                         </div>
-                        <h3 class="text-2xl font-semibold mt-8 mb-4">Follow Me</h3>
-                        <div class="flex space-x-4">
-                            <a href="https://github.com/tejaskhanavte" target="_blank">
-                                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub"
-                                    style="width:30px; height:30px;">
-                            </a>
+                    </div>
 
-                            <a href="https://www.linkedin.com/in/tejas-khanavate-39907a342" target="_blank">
-                                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"
-                                    style="width:30px; height:30px;">
-                            </a>
-                            <a href="#"
-                                class="bg-gray-200 dark:bg-gray-700 p-3 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900 transition">
-                                <i class="fab fa-twitter text-gray-700 dark:text-gray-300"></i>
-                            </a>
-                            <a href="https://www.instagram.com/tejas_khanavate_96k/" target="_blank">
-                                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"
-                                    style="width:30px; height:30px;">
-                            </a>
+                    <!-- Certificate 2 -->
+                    <div class="certificate-card">
+                        <div class="certificate-image">
+                            <img src="hack.jpg"
+                                alt="React JS Master Certification with modern purple gradient design and official branding" />
+                        </div>
+                        <div class="certificate-content">
+                            <h3>Hackathon Certificate</h3>
+                            <p>participate Smart India Hackathon</p>
+                            <div class="certificate-meta">
+                                <span class="issue-date">Issued: March 2025</span>
+                                <span class="status-badge">Active</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="md:w-1/2">
-                    <div class="card p-8 rounded-xl shadow-lg h-full">
-                        <h3 class="text-2xl font-semibold mb-6">Send Me a Message</h3>
 
-                        <!-- Contact Form -->
-                        <form id="contact-form" action="https://formspree.io/f/mkgvbnbd" method="POST">
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2">Your Name</label>
-                                <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" />
+                    <!-- Certificate 3 -->
+                    <div class="certificate-card">
+                        <div class="certificate-image">
+                            <img src="https://placeholder-image-service.onrender.com/image/400x300?prompt=UI%2FUX%20Design%20certificate%20with%20minimal%20design%20and%20clean%20typography&id=cert-3"
+                                alt="UI/UX Design Excellence Certificate with clean minimalist design and geometric patterns" />
+                        </div>
+                        <div class="certificate-content">
+                            <h3>Collage level DT compitation</h3>
+                            <p>User-centered design principles and prototyping</p>
+                            <div class="certificate-meta">
+                                <span class="issue-date">Issued: January 2024</span>
+                                <span class="status-badge">Active</span>
                             </div>
-
-                            <div class="mb-4">
-                                <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2">Your
-                                    Email</label>
-                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" />
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="subject" class="block text-gray-700 dark:text-gray-300 mb-2">Subject</label>
-                                <input type="text" id="subject" name="subject" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" />
-                            </div>
-
-                            <div class="mb-6">
-                                <label for="message" class="block text-gray-700 dark:text-gray-300 mb-2">Your
-                                    Message</label>
-                                <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"></textarea>
-                            </div>
-
-                            <button type="submit"
-                                class="w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-300 font-medium">
-                                Send Message
-                            </button>
-                        </form>
-
-                        <!-- Thank You Message -->
-                        <p id="thank-you-message" class="hidden mt-4 text-green-600 font-semibold">
-                            ✅ Thank you for your message! I will get back to you soon.
-                        </p>
+                        </div>
                     </div>
-                </div>
-
-                <script>
-                    const form = document.getElementById('contact-form');
-                    const thankYouMessage = document.getElementById('thank-you-message');
-
-                    form.addEventListener('submit', function (e) {
-                        e.preventDefault();
-
-                        const formData = new FormData(form);
-
-                        fetch(form.action, {
-                            method: form.method,
-                            body: formData,
-                            headers: {
-                                'Accept': 'application/json'
-                            }
-                        }).then(response => {
-                            if (response.ok) {
-                                form.reset();
-                                thankYouMessage.classList.remove('hidden');
-                            } else {
-                                response.json().then(data => {
-                                    if (Object.hasOwn(data, 'errors')) {
-                                        alert(data["errors"].map(error => error["message"]).join(", "));
-                                    } else {
-                                        alert('Oops! There was a problem submitting your form');
-                                    }
-                                });
-                            }
-                        }).catch(() => {
-                            alert('Oops! There was a problem submitting your form');
-                        });
-                    });
-                </script>
-
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-gray-900 py-8">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="text-center md:text-left mb-4 md:mb-0">
-                    <a href="#" class="text-xl font-bold text-gray-800 dark:text-white">MY<span
-                            class="text-blue-500">PORTFOLIO</span></a>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">© 2023 All Rights Reserved</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-500">Privacy Policy</a>
-                    <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-500">Terms of Service</a>
-                    <a href="#home" class="text-gray-600 dark:text-gray-400 hover:text-blue-500">
-                        <i class="fas fa-arrow-up"></i>
-                    </a>
                 </div>
             </div>
-        </div>
-    </footer>
+        </section>
 
-    <script>
-        // Dark mode toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const html = document.documentElement;
+        <!-- Contact Section -->
+        <section id="contact" class="section bg-gray-100 dark:bg-gray-800">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-4">Get In <span class="text-blue-500">Touch</span></h2>
+                <p class="text-xl text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+                    Have a project in mind or want to discuss potential opportunities? Feel free to reach out!
+                </p>
+                <div class="flex flex-col md:flex-row gap-12">
+                    <div class="md:w-1/2">
+                        <div class="card p-8 rounded-xl shadow-lg h-full">
+                            <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start space-x-4">
+                                    <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
+                                        <i class="fas fa-envelope text-blue-500 dark:text-blue-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium">Email</h4>
+                                        <p class="text-gray-600 dark:text-gray-400">tejaskhanavate1@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4">
+                                    <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
+                                        <i class="fas fa-phone-alt text-blue-500 dark:text-blue-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium">Phone</h4>
+                                        <p class="text-gray-600 dark:text-gray-400">+91 7620657696</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4">
+                                    <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
+                                        <i class="fas fa-map-marker-alt text-blue-500 dark:text-blue-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium">Location</h4>
+                                        <p class="text-gray-600 dark:text-gray-400">pune</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-semibold mt-8 mb-4">Follow Me</h3>
+                            <div class="flex space-x-4">
+                                <a href="https://github.com/tejaskhanavte" target="_blank">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub"
+                                        style="width:30px; height:30px;">
+                                </a>
 
-        // Check for saved user preference
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            html.classList.add('dark');
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        } else {
-            html.classList.remove('dark');
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-        }
+                                <a href="https://www.linkedin.com/in/tejas-khanavate-39907a342" target="_blank">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"
+                                        style="width:30px; height:30px;">
+                                </a>
+                                <a href="https://x.com/TejasKhanavate" target="_blank">
+                                    <img src="logot.png" alt="Twitter"
+                                        style="width:30px; height:30px;">
+                                </a>
+                                <a href="https://www.instagram.com/tejas_khanavate_96k/" target="_blank">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"
+                                        style="width:30px; height:30px;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="card p-8 rounded-xl shadow-lg h-full">
+                            <h3 class="text-2xl font-semibold mb-6">Send Me a Message</h3>
 
-        // Toggle theme
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            if (html.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
+                            <!-- Contact Form -->
+                            <form id="contact-form" action="https://formspree.io/f/mkgvbnbd" method="POST">
+                                <div class="mb-4">
+                                    <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2">Your
+                                        Name</label>
+                                    <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2">Your
+                                        Email</label>
+                                    <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="subject"
+                                        class="block text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                                    <input type="text" id="subject" name="subject" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" />
+                                </div>
+
+                                <div class="mb-6">
+                                    <label for="message" class="block text-gray-700 dark:text-gray-300 mb-2">Your
+                                        Message</label>
+                                    <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"></textarea>
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-300 font-medium">
+                                    Send Message
+                                </button>
+                            </form>
+
+                            <!-- Thank You Message -->
+                            <p id="thank-you-message" class="hidden mt-4 text-green-600 font-semibold">
+                                ✅ Thank you for your message! I will get back to you soon.
+                            </p>
+                        </div>
+                    </div>
+
+                    <script>
+                        const form = document.getElementById('contact-form');
+                        const thankYouMessage = document.getElementById('thank-you-message');
+
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+
+                            const formData = new FormData(form);
+
+                            fetch(form.action, {
+                                method: form.method,
+                                body: formData,
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            }).then(response => {
+                                if (response.ok) {
+                                    form.reset();
+                                    thankYouMessage.classList.remove('hidden');
+                                } else {
+                                    response.json().then(data => {
+                                        if (Object.hasOwn(data, 'errors')) {
+                                            alert(data["errors"].map(error => error["message"]).join(", "));
+                                        } else {
+                                            alert('Oops! There was a problem submitting your form');
+                                        }
+                                    });
+                                }
+                            }).catch(() => {
+                                alert('Oops! There was a problem submitting your form');
+                            });
+                        });
+                    </script>
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-gray-900 py-8">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-center md:text-left mb-4 md:mb-0">
+                        <a href="#" class="text-xl font-bold text-gray-800 dark:text-white">MY<span
+                                class="text-blue-500">PORTFOLIO</span></a>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">© 2025 All Rights Reserved</p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-500">Privacy Policy</a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-500">Terms of Service</a>
+                        <a href="#home" class="text-gray-600 dark:text-gray-400 hover:text-blue-500">
+                            <i class="fas fa-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Dark mode toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const html = document.documentElement;
+
+            // Check for saved user preference
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
             } else {
-                localStorage.setItem('theme', 'light');
+                html.classList.remove('dark');
                 themeIcon.classList.remove('fa-sun');
                 themeIcon.classList.add('fa-moon');
             }
-        });
 
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Close mobile menu when clicking on a link
-        const navLinks = document.querySelectorAll('#mobile-menu a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+            // Toggle theme
+            themeToggle.addEventListener('click', () => {
+                html.classList.toggle('dark');
+                if (html.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
                 }
             });
-        });
 
-        // Particles.js for hero section
-        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-        });
-    </script>
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when clicking on a link
+            const navLinks = document.querySelectorAll('#mobile-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Particles.js for hero section
+            document.addEventListener('DOMContentLoaded', function () {
+
+            });
+        </script>
 </body>
 
 </html>
-
-
-
